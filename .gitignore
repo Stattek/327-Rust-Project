@@ -5,4 +5,4 @@
 *.pdb
 
 # ignore any /target folders
-*/target
+target/
