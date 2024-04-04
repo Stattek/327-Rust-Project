@@ -1,0 +1,8 @@
+# ignore .exe files
+*.exe
+
+# ignore any .pdb files
+*.pdb
+
+# ignore any /target folders
+*/target
