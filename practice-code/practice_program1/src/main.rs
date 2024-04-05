@@ -9,6 +9,8 @@ fn main() {
     println!("Is 35 divisible by 5? -> {}", divisible_by(35, 5));
     println!("Is 0 divisible by 0? -> {}", divisible_by(0, 0));
 
+    println!("True: {}", match_example(true));
+    println!("False: {}", match_example(false));
 }
 
 /**
@@ -65,4 +67,13 @@ fn for_loop_test() {
         print!("{} ", number);
     }
     println!("\n");
+}
+
+fn match_example(my_bool: bool) -> char {
+    let output = match my_bool {
+        true => 't',
+        false => 'f',
+    };
+
+    return output;
 }
