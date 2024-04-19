@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "tutorial4_user_input"
+name = "tutorial4"
 version = "0.1.0"

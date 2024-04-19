@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "tutorial2_variables_and_shadowing"
+name = "tutorial2"
 version = "0.1.0"

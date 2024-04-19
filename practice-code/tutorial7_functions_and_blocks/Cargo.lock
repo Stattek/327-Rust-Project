@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "tutorial7_functions_and_blocks"
+name = "tutorial7"
 version = "0.1.0"
