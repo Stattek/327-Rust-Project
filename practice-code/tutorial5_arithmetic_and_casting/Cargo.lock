@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "tutorial6"
+name = "tutorial5_arithmetic_and_casting"
 version = "0.1.0"

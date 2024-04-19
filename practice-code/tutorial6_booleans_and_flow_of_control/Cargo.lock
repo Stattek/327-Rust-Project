@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "tutorial5"
+name = "tutorial6_booleans_and_flow_of_control"
 version = "0.1.0"
