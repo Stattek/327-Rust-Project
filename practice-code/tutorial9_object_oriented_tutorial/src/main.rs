@@ -17,7 +17,7 @@ struct Rectangle {
 // This is an implementation block that gives the Rectangle struct
 // some methods.
 impl Rectangle {
-    //Calculates and returns the area of the Rectangle
+    // Calculates and returns the area of the Rectangle
     fn area(&self) -> u32 {
         // takes a reference to self
 
