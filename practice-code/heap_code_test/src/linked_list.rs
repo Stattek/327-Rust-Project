@@ -1,3 +1,4 @@
+
 struct Node {
     // stores its next node on the heap
     // the next node can exist or not exist, which is why it is an Option
