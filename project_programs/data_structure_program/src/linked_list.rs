@@ -60,6 +60,17 @@ impl VideoGame {
             release_date: date,
         }
     }
+
+    pub fn print_self(&self) {
+        println!(
+            "Video Game Name: {}\n\tPublisher: {}\n\tRelease date: {}/{}/{}",
+            self.name,
+            self.publisher,
+            self.release_date.month,
+            self.release_date.day,
+            self.release_date.year
+        );
+    }
 }
 
 /*
@@ -70,7 +81,7 @@ pub struct Node {
     // stores its next node on the heap
     // the next node can exist or not exist, which is why it is an Option
     next: Option<Box<Node>>,
-    data: VideoGame,
+    pub data: VideoGame,
 }
 
 impl Node {
@@ -90,7 +101,7 @@ Struct that holds a singly-linked list.
 */
 pub struct LinkedList {
     head: Option<Box<Node>>,
-    size: u32,
+    size: i32,
 }
 
 impl LinkedList {
@@ -130,7 +141,7 @@ impl LinkedList {
         self.size += 1;
     }
 
-    pub fn at(&self, index: &u32) -> Option<&Box<Node>> {
+    pub fn at(&self, index: &i32) -> Option<&Box<Node>> {
         if *index < self.size {
             //get a mutable reference to the head
             let mut cur_node = self.head.as_ref();
@@ -149,12 +160,18 @@ impl LinkedList {
         }
     }
 
+    pub fn print_at(&self, index: &i32) {
+        if let Some(the_node) = self.at(index) {
+            the_node.data.print_self();
+        }
+    }
+
     /*
     Finds a video game in the list.
     If it exists, then returns the index of the item
     If it does not exist, then it returns None.
     */
-    pub fn find(&self, video_game_name: String) -> Option<u32> {
+    pub fn find(&self, video_game_name: String) -> Option<i32> {
         // start at the head of the list
         let mut cur_node = self.head.as_ref();
         let mut index = 0;
@@ -182,7 +199,7 @@ impl LinkedList {
     Finds the first Node that contains
     a game with a publisher of the same name as the one passed.
      */
-    pub fn find_publisher(&self, publisher_name: String) -> Option<u32> {
+    pub fn find_publisher(&self, publisher_name: String) -> Option<i32> {
         // start at the head of the list
         let mut cur_node = self.head.as_ref();
         let mut index = 0;
@@ -206,7 +223,7 @@ impl LinkedList {
         None
     }
 
-    pub fn find_newest_game(&self) -> u32 {
+    pub fn find_newest_game(&self) -> i32 {
         // start at the head of the list
         let mut cur_node = self.head.as_ref();
         let mut index = 0;
@@ -242,26 +259,59 @@ impl LinkedList {
         min_index
     }
 
-    // pub fn print_list(&self) {
-    //     let mut cur_node = self.head.as_ref();
+    pub fn remove_game(&mut self, video_game_name: &String) -> bool {
+        // start at the head of the list
+        let mut cur_node = self.head.as_mut();
+        let mut index = 0;
 
-    //     // print opening bracket
-    //     print!("[");
-    //     // go through the linked list
-    //     for num in 0..self.size {
-    //         // if we have some value, then print it
-    //         if let Some(next_node) = &cur_node {
-    //             print!("{}", next_node.data);
+        if let Some(mut cur_node) = cur_node {
+            while cur_node.data.name != *video_game_name && index < self.size {
+                if cur_node.next.is_some() {
+                    // if the next node is something, then move the current node forward
+                    cur_node = cur_node.next.as_mut().unwrap();
+                }
+                index += 1;
+            }
 
-    //             if num + 1 != self.size {
-    //                 // if this is not the last element, then print a comma
-    //                 print!(", ");
-    //             }
-    //             cur_node = next_node.next.as_ref();
-    //         }
-    //     }
+            if cur_node.data.name == *video_game_name {
+                // if we have a match
 
-    //     // print closing bracket
-    //     println!("]");
-    // }
+                if let Some(mut _next_node) = cur_node.next.as_mut() {
+                    // if the next node has a value
+                    if let Some(last_node) = _next_node.next.as_mut() {
+                        // if the last node has a value
+                        _next_node = last_node;
+                    } else {
+                        // if we have nothing directly after the next node, then we make it None
+                        cur_node.next = None;
+                    }
+                } else {
+                    // if there is nothing after this node, then the_node's next should be None
+                    cur_node.next = None;
+                }
+                return true;
+            }
+        }
+
+        false
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.size == 0
+    }
+
+    pub fn print_list(&self) {
+        let mut cur_node = self.head.as_ref();
+
+        // go through the linked list
+        for num in 0..self.size {
+            // if we have some value, then print it
+            if let Some(the_node) = &cur_node {
+                the_node.data.print_self();
+
+                // move the current node forward
+                cur_node = the_node.next.as_ref();
+            }
+        }
+    }
 }

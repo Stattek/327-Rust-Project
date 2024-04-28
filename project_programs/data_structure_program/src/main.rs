@@ -1,24 +1,187 @@
 mod linked_list;
+use linked_list::LinkedList;
 use linked_list::{Date, VideoGame};
-
-use crate::linked_list::LinkedList;
+use std::io::stdin;
+use std::result;
 
 fn main() {
-    let mut my_list = get_starting_list();
+    // let mut my_list = get_starting_list();
 
-    if let Some(index) = my_list.find(String::from("Pikmin")) {
-        println!("{}", index);
+    // if let Some(index) = my_list.find(String::from("Pikmin")) {
+    //     println!("{}", index);
+    // } else {
+    //     println!("Game not found.");
+    // }
+
+    // if let Some(index) = my_list.find_publisher(String::from("not a publisher")) {
+    //     println!("{}", index);
+    // } else {
+    //     println!("Publisher not found.");
+    // }
+
+    // println!("{}", my_list.find_newest_game());
+
+    // get_video_game_from_user(&mut my_list);\
+
+    let mut continue_running = true;
+    let mut the_list = LinkedList::new(None);
+
+    while continue_running {
+        print_menu();
+
+        let mut choice_string = String::new();
+        stdin()
+            .read_line(&mut choice_string)
+            .expect("Error in reading choice.");
+        // parse the choice
+        let choice = choice_string.trim().parse::<i32>().unwrap();
+
+        match choice {
+            1 => add_new_entry(&mut the_list),
+            2 => find_video_game(&the_list),
+            3 => find_first_game(&the_list),
+            4 => remove_game(&mut the_list),
+            5 => check_empty(&the_list),
+            6 => print_list(&the_list),
+            7 => continue_running = false,
+            _ => println!("Invalid choice."),
+        };
+    }
+}
+
+fn print_menu() {
+    println!("1. Add new entry\n2. Find Video Game\n3.Find First Game From Game Publisher in List\n4. Remove Game by Name\n5. Check if Empty\n6. Print List\n 7. Quit");
+}
+
+fn add_new_entry(list: &mut LinkedList) {
+    let the_game = get_video_game_from_user();
+
+    list.push_back(the_game);
+
+    println!("\n\nEntry added.");
+}
+
+fn find_video_game(list: &LinkedList) {
+    let game_name = get_game_name_from_user();
+
+    let index = list.find(game_name);
+    if let Some(the_index) = index {
+        let the_game = list.print_at(&the_index);
+    }
+}
+
+fn find_first_game(list: &LinkedList) {
+    let publisher_name = get_publisher_name_from_user();
+
+    let index = list.find_publisher(publisher_name);
+    if let Some(the_index) = index {
+        let the_game = list.print_at(&the_index);
+    }
+}
+
+fn remove_game(list: &mut LinkedList) {
+    let game_name = get_game_name_from_user();
+
+    let result = list.remove_game(&game_name);
+
+    if result {
+        println!("Game \"{}\" removed from the list.", game_name);
     } else {
         println!("Game not found.");
     }
+}
 
-    if let Some(index) = my_list.find_publisher(String::from("not a publisher")) {
-        println!("{}", index);
+fn check_empty(list: &LinkedList) {
+    let result = list.is_empty();
+
+    if result {
+        println!("List is empty.");
     } else {
-        println!("Publisher not found.");
+        println!("List is not empty.");
+    }
+}
+
+fn print_list(list: &LinkedList) {
+    println!("List contents:");
+    list.print_list();
+    println!("End of list.");
+}
+
+fn get_game_name_from_user() -> String {
+    println!("\nEnter the game name:");
+
+    let mut game_name = String::new();
+    stdin()
+        .read_line(&mut game_name)
+        .expect("Invalid game name input.");
+
+    game_name
+}
+
+fn get_publisher_name_from_user() -> String {
+    println!("\nEnter the game's publisher:");
+
+    let mut publisher_name = String::new();
+    stdin()
+        .read_line(&mut publisher_name)
+        .expect("Invalid publisher name input.");
+
+    publisher_name
+}
+
+fn get_date_from_user() -> Date {
+    println!("\nEnter the day:");
+
+    let mut day_string = String::new();
+    stdin().read_line(&mut day_string);
+
+    let mut day: u8 = day_string.trim().parse().unwrap();
+
+    while day < 1 || day > 31 {
+        println!("Invalid day input");
+
+        println!("\nEnter the day");
+
+        day_string = String::new();
+        stdin().read_line(&mut day_string);
+
+        day = day_string.trim().parse().unwrap();
     }
 
-    println!("{}", my_list.find_newest_game());
+    println!("\nEnter the month:");
+
+    let mut month_string = String::new();
+    stdin().read_line(&mut month_string);
+
+    let mut month: u8 = month_string.trim().parse().unwrap();
+
+    while month < 1 || month > 12 {
+        println!("Invalid month input");
+
+        println!("\nEnter the month");
+
+        month_string = String::new();
+        stdin().read_line(&mut month_string);
+
+        month = month_string.trim().parse().unwrap();
+    }
+
+    println!("\nEnter the year:");
+
+    let mut year_string = String::new();
+    stdin().read_line(&mut year_string);
+
+    let mut year: u16 = year_string.trim().parse().unwrap();
+
+    Date::new(day, month, year)
+}
+
+fn get_video_game_from_user() -> VideoGame {
+    let game_name = get_game_name_from_user();
+    let publisher_name = get_publisher_name_from_user();
+    let date = get_date_from_user();
+
+    VideoGame::new(game_name, publisher_name, date)
 }
 
 fn get_starting_list() -> LinkedList {
