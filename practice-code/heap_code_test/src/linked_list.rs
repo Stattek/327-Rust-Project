@@ -43,7 +43,7 @@ impl LinkedList {
         let mut cur_node = self.head.as_mut();
 
         // find the node we want to add
-        for i in 0..self.size - 1 {
+        for _i in 0..self.size - 1 {
             // increment the head
             if let Some(next_node) = cur_node {
                 cur_node = next_node.next.as_mut();
@@ -64,7 +64,7 @@ impl LinkedList {
             let mut cur_node = self.head.as_mut();
 
             // find the node we want to add
-            for i in 0..*index {
+            for _i in 0..*index {
                 // increment the head
                 if let Some(next_node) = cur_node {
                     cur_node = next_node.next.as_mut();
