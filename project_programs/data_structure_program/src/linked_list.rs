@@ -1,3 +1,5 @@
+use std::iter::Cycle;
+
 /*
 Simple struct to hold date information
  */
@@ -133,9 +135,11 @@ impl LinkedList {
             }
         }
 
-        // add the element to the end of the list
         if let Some(node) = cur_node {
+            // add the element to the end of the list
             node.next = Some(Box::new(Node::new(data)));
+        } else {
+            self.head = Some(Box::new(Node::new(data)));
         }
 
         self.size += 1;
@@ -260,37 +264,28 @@ impl LinkedList {
     }
 
     pub fn remove_game(&mut self, video_game_name: &String) -> bool {
-        // start at the head of the list
-        let mut cur_node = self.head.as_mut();
         let mut index = 0;
 
-        if let Some(mut cur_node) = cur_node {
-            while cur_node.data.name != *video_game_name && index < self.size {
-                if cur_node.next.is_some() {
-                    // if the next node is something, then move the current node forward
-                    cur_node = cur_node.next.as_mut().unwrap();
-                }
-                index += 1;
-            }
+        let mut cur_option = &mut (self.head);
 
-            if cur_node.data.name == *video_game_name {
-                // if we have a match
-
-                if let Some(mut _next_node) = cur_node.next.as_mut() {
-                    // if the next node has a value
-                    if let Some(last_node) = _next_node.next.as_mut() {
-                        // if the last node has a value
-                        _next_node = last_node;
-                    } else {
-                        // if we have nothing directly after the next node, then we make it None
-                        cur_node.next = None;
-                    }
-                } else {
-                    // if there is nothing after this node, then the_node's next should be None
-                    cur_node.next = None;
-                }
-                return true;
+        // start at the head of the list
+        while cur_option.is_some()
+            && cur_option.data.name != *video_game_name
+            && index < self.size
+        {
+            if cur_option.unwrap().next.is_some() {
+                // if the next node is something, then move the current node forward
+                cur_option = &mut cur_option.unwrap().next;
             }
+            index += 1;
+        }
+
+        if cur_option.unwrap().data.name == *video_game_name {
+            // if we have a match
+
+            // decrement size
+            self.size -= 1;
+            return true;
         }
 
         false
