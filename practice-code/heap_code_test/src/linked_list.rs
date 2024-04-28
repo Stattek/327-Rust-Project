@@ -1,4 +1,4 @@
-struct Node {
+pub struct Node {
     // stores its next node on the heap
     // the next node can exist or not exist, which is why it is an Option
     pub next: Option<Box<Node>>,
@@ -36,23 +36,67 @@ impl LinkedList {
         }
     }
 
-    pub fn add_element(&mut self, data: i32, index: &i32) {
-        if *index < self.size {
-            // get the current node in the list, starting at the head
+    pub fn push_back(&mut self, data: i32) {
+        // get the current node in the list, starting at the head
 
+        //get a mutable reference to the head
+        let mut cur_node = self.head.as_mut();
+
+        // find the node we want to add
+        for i in 0..self.size - 1 {
+            // increment the head
+            if let Some(next_node) = cur_node {
+                cur_node = next_node.next.as_mut();
+            }
+        }
+
+        // add the element to the end of the list
+        if let Some(node) = cur_node {
+            node.next = Some(Box::new(Node::new(data)));
+        }
+
+        self.size += 1;
+    }
+
+    pub fn at(&mut self, index: &i32) -> Option<&mut Box<Node>> {
+        if *index < self.size {
             //get a mutable reference to the head
-            let mut cur_node = &mut self.head;
+            let mut cur_node = self.head.as_mut();
 
             // find the node we want to add
             for i in 0..*index {
                 // increment the head
-                let next_node = match cur_node {
-                    Some(cur_node) => &mut cur_node.next,
-                    _ => panic!("Error in finding element"),
-                };
+                if let Some(next_node) = cur_node {
+                    cur_node = next_node.next.as_mut();
+                }
+            }
 
-                cur_node = next_node;
+            return cur_node;
+        } else {
+            return None;
+        }
+    }
+
+    pub fn print_list(&self) {
+        let mut cur_node = self.head.as_ref();
+
+        // print opening bracket
+        print!("[");
+        // go through the linked list
+        for num in 0..self.size {
+            // if we have some value, then print it
+            if let Some(next_node) = &cur_node {
+                print!("{}", next_node.data);
+
+                if num + 1 != self.size {
+                    // if this is not the last element, then print a comma
+                    print!(", ");
+                }
+                cur_node = next_node.next.as_ref();
             }
         }
+
+        // print closing bracket
+        println!("]");
     }
 }
