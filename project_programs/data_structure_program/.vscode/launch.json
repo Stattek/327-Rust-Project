@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(Windows) Launch",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/target/debug/data_structure_program.exe",
+            "args": [
+                "-namespace",
+                "default",
+                "-id",
+                "1234",
+                "-address",
+                "\\\\.\\pipe\\containerd-containerd",
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}",
+            "environment": [
+                {
+                    "name": "TTRPC_ADDRESS",
+                    "value": "\\\\.\\pipe\\containerd-containerd.ttrpc"
+                }
+            ],
+            "console": "integratedTerminal",
+            "preLaunchTask": "skeleton"
+        }
+    ]
+}
