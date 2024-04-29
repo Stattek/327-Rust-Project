@@ -5,24 +5,6 @@ use std::io::stdin;
 use std::result;
 
 fn main() {
-    // let mut my_list = get_starting_list();
-
-    // if let Some(index) = my_list.find(String::from("Pikmin")) {
-    //     println!("{}", index);
-    // } else {
-    //     println!("Game not found.");
-    // }
-
-    // if let Some(index) = my_list.find_publisher(String::from("not a publisher")) {
-    //     println!("{}", index);
-    // } else {
-    //     println!("Publisher not found.");
-    // }
-
-    // println!("{}", my_list.find_newest_game());
-
-    // get_video_game_from_user(&mut my_list);\
-
     let mut continue_running = true;
     let mut the_list = LinkedList::new(None);
 
@@ -50,7 +32,7 @@ fn main() {
 }
 
 fn print_menu() {
-    println!("1. Add new entry\n2. Find Video Game\n3.Find First Game From Game Publisher in List\n4. Remove Game by Name\n5. Check if Empty\n6. Print List\n 7. Quit");
+    println!("1. Add new entry\n2. Find Video Game\n3. Find First Game From Game Publisher in List\n4. Remove Game by Name\n5. Check if Empty\n6. Print List\n7. Quit");
 }
 
 fn add_new_entry(list: &mut LinkedList) {
