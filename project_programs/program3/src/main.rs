@@ -33,7 +33,7 @@ fn main() {
     let mut food_list: Vec<String> = Vec::new();
     println!("\nOkay, now enter in the current foods you eat on a regular basis, line by line. enter STOP to see results ->");
     let mut input = String::new();
-    while input.trim() != "STOP" {
+    while input.trim().to_string() != "STOP".to_string() {
         io::stdin().read_line(&mut input).expect("Failed to read line"); 
         println!("DEBUG {}", input);
         food_list.push(input.clone());
