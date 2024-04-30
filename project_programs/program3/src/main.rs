@@ -22,5 +22,5 @@ fn main() {
         println!("Input is out of range. Please enter a number between 1 and 3.");
     }
 
-    
+    println!("Okay, now enter in the current foods you eat on a regular basis, line by line ->");
 }
