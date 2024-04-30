@@ -17,10 +17,16 @@ fn main() {
     let input: i32 = input.trim().parse().expect("Please enter a number");
 
     if input >= 1 && input <= 3 {
-        println!("You entered: {}", input);
+        match input {
+            1=>println!("You entered: {}, THE PALEO CAVEMAN MUSCLE BUILDER EXTREME", input),
+            2=>println!("You entered: {}, IF LOOKS COULD KALE", input),
+            3=>println!("You entered: {}, THE SUPERNOVA SALMON SLIM DOWN", input),
+            _=>println!("input not found."),
+        }
+       
     } else {
         println!("Input is out of range. Please enter a number between 1 and 3.");
     }
 
-    println!("Okay, now enter in the current foods you eat on a regular basis, line by line ->");
+    println!("\nOkay, now enter in the current foods you eat on a regular basis, line by line ->");
 }
