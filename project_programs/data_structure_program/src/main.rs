@@ -2,7 +2,6 @@ mod linked_list;
 use linked_list::LinkedList;
 use linked_list::{Date, VideoGame};
 use std::io::stdin;
-use std::result;
 
 fn main() {
     let mut continue_running = true;
@@ -22,17 +21,16 @@ fn main() {
             1 => add_new_entry(&mut the_list),
             2 => find_video_game(&the_list),
             3 => find_first_game(&the_list),
-            4 => remove_game(&mut the_list),
-            5 => check_empty(&the_list),
-            6 => print_list(&the_list),
-            7 => continue_running = false,
+            4 => check_empty(&the_list),
+            5 => print_list(&the_list),
+            6 => continue_running = false,
             _ => println!("Invalid choice."),
         };
     }
 }
 
 fn print_menu() {
-    println!("1. Add new entry\n2. Find Video Game\n3. Find First Game From Game Publisher in List\n4. Remove Game by Name\n5. Check if Empty\n6. Print List\n7. Quit");
+    println!("\n1. Add new entry\n2. Find Video Game\n3. Find First Game From Game Publisher in List\n4. Check if Empty\n5. Print List\n6. Quit");
 }
 
 fn add_new_entry(list: &mut LinkedList) {
@@ -48,6 +46,9 @@ fn find_video_game(list: &LinkedList) {
 
     let index = list.find(game_name);
     if let Some(the_index) = index {
+        // print new line
+        println!();
+        // print the game
         let the_game = list.print_at(&the_index);
     }
 }
@@ -58,18 +59,6 @@ fn find_first_game(list: &LinkedList) {
     let index = list.find_publisher(publisher_name);
     if let Some(the_index) = index {
         let the_game = list.print_at(&the_index);
-    }
-}
-
-fn remove_game(list: &mut LinkedList) {
-    let game_name = get_game_name_from_user();
-
-    let result = list.remove_game(&game_name);
-
-    if result {
-        println!("Game \"{}\" removed from the list.", game_name);
-    } else {
-        println!("Game not found.");
     }
 }
 
@@ -84,9 +73,9 @@ fn check_empty(list: &LinkedList) {
 }
 
 fn print_list(list: &LinkedList) {
-    println!("List contents:");
+    println!("List contents:\n");
     list.print_list();
-    println!("End of list.");
+    println!("\nEnd of list.");
 }
 
 fn get_game_name_from_user() -> String {

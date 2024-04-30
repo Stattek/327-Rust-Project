@@ -263,41 +263,6 @@ impl LinkedList {
         min_index
     }
 
-    pub fn remove_game(&mut self, video_game_name: &String) -> bool {
-        // start with the head of the list
-        let mut cur_option = &mut self.head;
-        let mut found = false;
-        let mut index = 0;
-        // check this value to see if it has the value we want before we loop
-        if cur_option.is_some() && cur_option.as_ref().unwrap().data.name == *video_game_name {
-            found = true;
-        }
-
-        while cur_option.is_some() && !found {
-            // loop through the list until we get to the end
-            // or we find the node we want
-
-            if let Some(next_value) = cur_option.as_ref().unwrap().next.as_ref() {
-                if next_value.data.name == *video_game_name {
-                    // we have found the data we are looking for
-                    found = true;
-                }
-
-                // we have some value, so move cur_option forward
-                cur_option = &mut cur_option.unwrap().next;
-            }
-
-            index += 1;
-        }
-
-        // if we have found the element we want to remove
-        if found {
-            
-        }
-
-        found
-    }
-
     pub fn is_empty(&self) -> bool {
         self.size == 0
     }
