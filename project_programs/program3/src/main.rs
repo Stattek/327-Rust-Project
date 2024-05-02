@@ -120,6 +120,9 @@ fn main() {
     print!("end program debug");
 }
 
+//make diet enum
+
+
 fn filter_for_diet(food_list: Vec<&str>, diet: Vec<&str>) -> Vec<&str> {
 
     food_list.iter().filter(|item| in_diet(item, diet)).collect();
