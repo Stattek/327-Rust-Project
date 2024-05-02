@@ -28,7 +28,7 @@ fn main() {
         match choice {
             1 => add_new_entry(&mut the_list),
             2 => find_video_game(&the_list),
-            3 => find_first_game(&the_list),
+            3 => find_first_game_from_publisher(&the_list),
             4 => find_newest_game(&the_list),
             5 => check_empty(&the_list),
             6 => print_list(&the_list),
@@ -84,12 +84,14 @@ Finds the first game in the list with the publisher name input by the user.
 
 Uses a reference to a LinkedList
 */
-fn find_first_game(list: &LinkedList) {
+fn find_first_game_from_publisher(list: &LinkedList) {
     let publisher_name = get_publisher_name_from_user();
 
     let index = list.find_publisher(publisher_name);
     if let Some(the_index) = index {
         list.print_at(&the_index);
+    } else {
+        println!("No Game Found.");
     }
 }
 /*
