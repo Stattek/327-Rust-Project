@@ -1,4 +1,5 @@
-use std::borrow::Borrow;
+// Simple linked list implementation
+// By David Slay
 
 /*
 Simple struct to hold date information
@@ -25,6 +26,7 @@ impl Date {
         Self { day, month, year }
     }
 
+    // checks if the rhs is newer than this instance
     pub fn newer_than(&self, rhs: &Date) -> bool {
         let mut result = false;
 
@@ -63,6 +65,7 @@ impl VideoGame {
         }
     }
 
+    // prints the video game to console
     pub fn print_self(&self) {
         println!(
             "Video Game Name: {}\n\tPublisher: {}\n\tRelease date: {}/{}/{}",
@@ -107,6 +110,7 @@ pub struct LinkedList {
 }
 
 impl LinkedList {
+    // create a new LinkedList with an optional first piece of data
     pub fn new(data: Option<VideoGame>) -> Self {
         // create a linked list with one node
         match data {
@@ -121,6 +125,7 @@ impl LinkedList {
         }
     }
 
+    // pushes a new VideoGame to the end of the list. Note: takes ownership of the VideoGame
     pub fn push_back(&mut self, data: VideoGame) {
         // get the current node in the list, starting at the head
 
@@ -145,6 +150,7 @@ impl LinkedList {
         self.size += 1;
     }
 
+    // returns a reference to the node on the heap at this index
     pub fn at(&self, index: &i32) -> Option<&Box<Node>> {
         if *index < self.size {
             //get a mutable reference to the head
@@ -227,51 +233,50 @@ impl LinkedList {
         None
     }
 
-    pub fn find_newest_game(&self) -> i32 {
+    // finds and returns the newest game in the list
+    pub fn find_newest_game(&self) -> Option<i32> {
         // start at the head of the list
-        let mut cur_node = self.head.as_ref();
-        let mut index = 0;
+        if self.head.is_some() {
+            let mut index = 0;
+            let mut min_index = 0;
 
-        let mut min_index = 0;
+            // start with the head node as the minimum
+            let mut min_node = self.head.as_ref();
+            let mut cur_node = self.head.as_ref();
 
-        if let Some(mut the_node) = cur_node {
-            // while we are not at the end of the list
-
-            // start with the first node as the minimum
-            let mut min_node = the_node;
-
-            while index < self.size {
-                cur_node = the_node.next.as_ref();
+            while cur_node.is_some() && cur_node.unwrap().next.is_some() {
+                cur_node = cur_node.unwrap().next.as_ref();
                 index += 1;
 
-                if the_node
+                if cur_node
+                    .unwrap()
                     .data
                     .release_date
-                    .newer_than(&min_node.data.release_date)
+                    .newer_than(&min_node.unwrap().data.release_date)
                 {
-                    min_node = the_node;
+                    min_node = cur_node;
                     min_index = index;
                 }
-
-                // move the node up
-                if cur_node.is_some() {
-                    the_node = cur_node.unwrap();
-                }
             }
+
+            // return the index of the minimum element
+            return Some(min_index);
         }
 
-        min_index
+        None
     }
 
+    // return true if the list is empty, false otherwise
     pub fn is_empty(&self) -> bool {
         self.size == 0
     }
 
+    // prints the list's contents
     pub fn print_list(&self) {
         let mut cur_node = self.head.as_ref();
 
         // go through the linked list
-        for num in 0..self.size {
+        for _ in 0..self.size {
             // if we have some value, then print it
             if let Some(the_node) = &cur_node {
                 the_node.data.print_self();
