@@ -190,9 +190,9 @@ fn get_date_from_user() -> Date {
         .read_line(&mut day_string)
         .expect("Invalid day input.");
 
-    let mut day: u8 = day_string.trim().parse().unwrap();
+    let mut day = day_string.trim().parse::<u8>();
 
-    while day < 1 || day > 31 {
+    while !day.is_ok() || day.as_ref().unwrap() < &1 || day.as_ref().unwrap() > &31 {
         println!("Invalid day input");
 
         println!("\nEnter the day");
@@ -202,7 +202,8 @@ fn get_date_from_user() -> Date {
             .read_line(&mut day_string)
             .expect("Invalid day input.");
 
-        day = day_string.trim().parse().unwrap();
+        // parse this string
+        day = day_string.trim().parse::<u8>();
     }
 
     println!("\nEnter the month:");
@@ -212,9 +213,11 @@ fn get_date_from_user() -> Date {
         .read_line(&mut month_string)
         .expect("Invalid month input.");
 
-    let mut month: u8 = month_string.trim().parse().unwrap();
+    let mut month = month_string.trim().parse::<u8>();
 
-    while month < 1 || month > 12 {
+    while !month.is_ok() || month.as_ref().unwrap() < &1 || month.as_ref().unwrap() > &12 {
+        // while the input month isn't an okay value and the month isn't valid
+
         println!("Invalid month input");
 
         println!("\nEnter the month");
@@ -224,7 +227,8 @@ fn get_date_from_user() -> Date {
             .read_line(&mut month_string)
             .expect("Invalid month input.");
 
-        month = month_string.trim().parse().unwrap();
+        // parse this string
+        month = month_string.trim().parse();
     }
 
     println!("\nEnter the year:");
@@ -234,9 +238,24 @@ fn get_date_from_user() -> Date {
         .read_line(&mut year_string)
         .expect("Invalid year input.");
 
-    let year: u16 = year_string.trim().parse().unwrap();
+    let mut year = year_string.trim().parse::<u16>();
 
-    Date::new(day, month, year)
+    while !year.is_ok() {
+        // while this year is not an okay value, we re-prompt the user
+
+        println!("Invalid year input.");
+        println!("\nEnter the year:");
+
+        year_string = String::new();
+        stdin()
+            .read_line(&mut year_string)
+            .expect("Invalid year input.");
+
+        // parse this string
+        year = year_string.trim().parse();
+    }
+
+    Date::new(day.unwrap(), month.unwrap(), year.unwrap())
 }
 
 /*
