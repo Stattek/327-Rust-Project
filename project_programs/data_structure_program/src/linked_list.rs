@@ -50,7 +50,6 @@ Stores information about a video game
  */
 pub struct VideoGame {
     name: String,
-    // a non-negative rating system
     publisher: String,
     release_date: Date,
 }
