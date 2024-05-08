@@ -1,4 +1,4 @@
-// Simple linked list implementation
+// Simple linked list implementation to hold information on video games
 // By David Slay
 
 /*

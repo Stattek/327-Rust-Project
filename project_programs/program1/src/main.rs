@@ -21,7 +21,7 @@ fn main() {
     //Initializes variables used in the loop
     let max_value: u64 = input.trim().parse().unwrap();
     let number = rand::thread_rng().gen_range(1..=max_value);
-    let mut guessed: bool = false;
+    let mut guessed = false;
     let mut wrong_guesses: u64 = 0;
 
     while guessed != true

@@ -1,5 +1,4 @@
-// Basic program that allows the user to look at data on video games
-// and add to the list
+// Basic program that allows the user to add and look at data on video games
 // By David Slay
 mod linked_list;
 use linked_list::LinkedList;
